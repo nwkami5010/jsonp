@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title></title>
+  </head>
+  <body>
+    <p id=amount></p>
+    <script>
+      amount.innerText = 100;
+      amount.onclick = function(e) {
+        console.log(1);
+        let script = document.createElement("script");
+        let functionName = "kala" + parseInt(Math.random() * 100000, 10);
+        window[functionName] = function(money) {
+          amount.innerText = money;
+        }
+        script.src = "/pay?callback=" + functionName;
+        document.body.appendChild(script);
+        script.onload = function(e) {
+          e.currentTarget.remove();
+          delete window[functionName];
+        }
+        script.onerror = function(e) {
+          e.currentTarget.remove();
+          delete window[functionName];
+        }
+      }
+    </script>
+  </body>
+</html>
